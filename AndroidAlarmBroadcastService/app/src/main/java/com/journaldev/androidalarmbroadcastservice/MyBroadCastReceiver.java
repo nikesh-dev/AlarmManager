@@ -36,7 +36,7 @@ public class MyBroadCastReceiver extends BroadcastReceiver {
         } else {
             //initializeView();
             Toast.makeText(context.getApplicationContext(), "Alarm Manager just ran", Toast.LENGTH_LONG).show();
-            Log.d(this.getClass().getSimpleName(),"alarm executed "+System.currentTimeMillis() +(60*1000));
+            Log.d(this.getClass().getSimpleName(),"alarm executed "+System.currentTimeMillis());
             nListener.alarmReceived("true");
         }
 

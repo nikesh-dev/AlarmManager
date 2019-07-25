@@ -74,7 +74,6 @@ public class MyService extends Service implements MessageListener, NotificationL
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(this, MyBroadCastReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
-
         MyBroadCastReceiver.bindListener(this);
         MessageReceiver.bindListener(this);
 
@@ -157,12 +156,14 @@ public class MyService extends Service implements MessageListener, NotificationL
         Calendar cal = Calendar.getInstance() ;
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.SECOND, 0);
+
            // alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis()+startScheduler,24*60*60*1000,pendingIntent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis()+startScheduler,10*60*1000, pendingIntent);
-        Log.d(this.getClass().getSimpleName(), cal.getTime().toString()+" pluse 10 minyes "+(cal.getTimeInMillis()+startScheduler));
-    }
-        else alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis()+startScheduler,10*60*1000, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTime().getTime(),10*60*1000, pendingIntent);
+            Log.d(this.getClass().getSimpleName(), calendar.getTime().toString()+" pluse 10 minyes "+(calendar.getTimeInMillis()));
+        }else {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), 10 * 60 * 1000, pendingIntent);
+        }
             FloatingLayout.stopRepeat=false;
             Toast.makeText(getApplicationContext(), "Alarm setup done", Toast.LENGTH_SHORT).show();
             Log.d(TAG,"alram sceduled success after "+startScheduler);
@@ -183,7 +184,7 @@ public class MyService extends Service implements MessageListener, NotificationL
 
     @Override
     public void alarmReceived(String message) {
-        managerOfSound();
+      //  managerOfSound();
         initializeView();
     }
 
