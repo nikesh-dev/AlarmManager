@@ -209,7 +209,6 @@ public class FloatingLayout extends Service {
 		if(!stopRepeat){
 			Log.d(this.getClass().getSimpleName(),"Alamr is setting");
 			Calendar calendar = Calendar.getInstance() ;
-			Log.d(this.getClass().getSimpleName()," truthr="+(System.currentTimeMillis()-calendar.getTimeInMillis()));
 			calendar.setTimeInMillis(System.currentTimeMillis());
 			calendar.add(Calendar.MINUTE,5);
 			//calendar.add(Calendar.SECOND,45);
@@ -231,11 +230,13 @@ public class FloatingLayout extends Service {
 //				Log.d(this.getClass().getSimpleName(), calendar.getTime().toString()+" plus 2 mintes");
 //			}
 //			else
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-				alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),((5*60*1000)), PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), PendingIntent.FLAG_CANCEL_CURRENT));
-			}else{
-				alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), PendingIntent.FLAG_CANCEL_CURRENT));
-			}
+//				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+//				alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),((5*60*1000)), PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), PendingIntent.FLAG_CANCEL_CURRENT));
+//			}else{
+//				alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), PendingIntent.FLAG_CANCEL_CURRENT));
+//			}
+
+			alarm.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), PendingIntent.FLAG_CANCEL_CURRENT));
 			//	Log.d(this.getClass().getSimpleName(),"nect alarm is "+(calendar.getTimeInMillis() +" "+calendar.getTime().toString()));
 			//alarm.set(AlarmManager.RTC, System.currentTimeMillis()+(2*60*1000),
 			//		PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), 0));

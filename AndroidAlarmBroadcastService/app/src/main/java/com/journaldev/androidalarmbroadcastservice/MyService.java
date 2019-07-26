@@ -158,9 +158,9 @@ public class MyService extends Service implements MessageListener, NotificationL
         cal.set(Calendar.SECOND, 0);
         Log.d(this.getClass().getSimpleName(), "Scheduling repeated alarm");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTime().getTime(),24*60*60*1000, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTime().getTime(),10*60*60*1000, pendingIntent);
         }else {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), 24*60*60*1000, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), 10*60*60*1000, pendingIntent);
         }
             FloatingLayout.stopRepeat=false;
             Toast.makeText(getApplicationContext(), "Alarm setup done", Toast.LENGTH_SHORT).show();
