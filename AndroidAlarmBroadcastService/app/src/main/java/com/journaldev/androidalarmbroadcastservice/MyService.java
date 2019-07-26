@@ -58,7 +58,7 @@ public class MyService extends Service implements MessageListener, NotificationL
     public void onDestroy()
     {
         isOn=false;
-        Toast.makeText(getApplicationContext(), "service destoryed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "service destoryed", Toast.LENGTH_SHORT).show();
         Log.d(TAG,"Service is destroyed");
     }
 
@@ -156,17 +156,15 @@ public class MyService extends Service implements MessageListener, NotificationL
         Calendar cal = Calendar.getInstance() ;
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.SECOND, 0);
-
-           // alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis()+startScheduler,24*60*60*1000,pendingIntent);
+        Log.d(this.getClass().getSimpleName(), "Scheduling repeated alarm");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTime().getTime(),10*60*1000, pendingIntent);
-            Log.d(this.getClass().getSimpleName(), calendar.getTime().toString()+" pluse 10 minyes "+(calendar.getTimeInMillis()));
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTime().getTime(),24*60*60*1000, pendingIntent);
         }else {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), 10 * 60 * 1000, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), 24*60*60*1000, pendingIntent);
         }
             FloatingLayout.stopRepeat=false;
             Toast.makeText(getApplicationContext(), "Alarm setup done", Toast.LENGTH_SHORT).show();
-            Log.d(TAG,"alram sceduled success after "+startScheduler);
+            Log.d(TAG,"alarm sceduled success after "+startScheduler);
     }
 
     private void cancelAlarm() {

@@ -56,15 +56,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         setContentView(R.layout.activity_main);
         //getListOfInstalledApps();
         //intentService = new Intent(this, MyService.class);
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),Manifest.permission.SYSTEM_ALERT_WINDOW)
-                != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SYSTEM_ALERT_WINDOW)){
-                showExplanation("Permission Needed", "Rationale", Manifest.permission.SYSTEM_ALERT_WINDOW, REQUEST_PERMISSION_PHONE_STATE);
-            } else {
-                requestPermission(android.Manifest.permission.SYSTEM_ALERT_WINDOW, 225);
-            }
-        }
+//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),Manifest.permission.SYSTEM_ALERT_WINDOW)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            if(ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.SYSTEM_ALERT_WINDOW)){
+//                showExplanation("Permission Needed", "Rationale", Manifest.permission.SYSTEM_ALERT_WINDOW, REQUEST_PERMISSION_PHONE_STATE);
+//            } else {
+//                requestPermission(android.Manifest.permission.SYSTEM_ALERT_WINDOW, 225);
+//            }
+//        }
         intentService = new Intent(getApplicationContext(),MyService.class);
        // intentService.setAction("com.journaldev.androidalarmbroadcastservice.MyService");
 

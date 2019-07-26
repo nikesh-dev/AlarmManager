@@ -63,7 +63,6 @@ public class FloatingLayout extends Service {
 			startMyOwnForeground();
 		else
 			startForeground(1, new Notification());
-		Log.i("My", "CallerNumber = " );
 
 		floatingview = LayoutInflater.from(this).inflate(
 				R.layout.floatinglayout, null);
@@ -72,11 +71,16 @@ public class FloatingLayout extends Service {
 		//getAllSms(MainActivity.CallerNumber);
 		TextView t = (TextView) floatingview.findViewById(R.id.name);
 		t.setText("Reminder");
-
+		int LAYOUT_FLAG=1;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+		} else {
+			LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+		}
 		final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
 				WindowManager.LayoutParams.WRAP_CONTENT,
 				WindowManager.LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+				LAYOUT_FLAG,
 				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
 				PixelFormat.TRANSLUCENT);
 
@@ -196,7 +200,7 @@ public class FloatingLayout extends Service {
 		if (floatingview != null) {
 			windowmanager.removeView(floatingview);
 		}
-
+		Log.d(this.getClass().getSimpleName(),"float service destroyed");
 	}
 
 	@Override
@@ -205,8 +209,10 @@ public class FloatingLayout extends Service {
 		if(!stopRepeat){
 			Log.d(this.getClass().getSimpleName(),"Alamr is setting");
 			Calendar calendar = Calendar.getInstance() ;
+			Log.d(this.getClass().getSimpleName()," truthr="+(System.currentTimeMillis()-calendar.getTimeInMillis()));
 			calendar.setTimeInMillis(System.currentTimeMillis());
-			calendar.add(Calendar.MINUTE,2);
+			calendar.add(Calendar.MINUTE,5);
+			//calendar.add(Calendar.SECOND,45);
 			//calendar.set(Calendar.SECOND, 0);
 			Log.d(this.getClass().getSimpleName(),"calendar is "+calendar.getTime().toString());
 			AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
@@ -226,11 +232,9 @@ public class FloatingLayout extends Service {
 //			}
 //			else
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-					Log.d(this.getClass().getSimpleName(),"nect alarm is "+(calendar.getTimeInMillis() +" "+calendar.getTime().toString()));
-				alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),((2*60*1000)+35), PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), 0));
+				alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),((5*60*1000)), PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), PendingIntent.FLAG_CANCEL_CURRENT));
 			}else{
-					Log.d(this.getClass().getSimpleName(),"nect alarm is "+(calendar.getTimeInMillis() +" "+calendar.getTime().toString()));
-				alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), 0));
+				alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  PendingIntent.getService(this, 0, new Intent(this, FloatingLayout.class), PendingIntent.FLAG_CANCEL_CURRENT));
 			}
 			//	Log.d(this.getClass().getSimpleName(),"nect alarm is "+(calendar.getTimeInMillis() +" "+calendar.getTime().toString()));
 			//alarm.set(AlarmManager.RTC, System.currentTimeMillis()+(2*60*1000),
